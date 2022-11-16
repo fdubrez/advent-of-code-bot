@@ -1,6 +1,10 @@
 const slack = require("./src/slack")
 const adventOfCode = require("./src/adventofcode")
 const quotes = require("./src/quotes")
+const audio = require("./src/audio")
+const path = require("path")
+const config = require("./src/config")
+const fs = require("fs")
 
 let previousData = null
 let lastResponse = null
@@ -18,12 +22,20 @@ function compute(leaderboardJsonResponse) {
         })
 }
 
+const MEDIA_PATH = path.join(process.cwd(), './src/media');
+
 async function main() {
     const json = await adventOfCode.getLeaderBoard();
+    lastResponse = json
     actualData = compute(json)
     // au premier passage on prend les données du bouchon de ce matin
     if (previousData === null) {
-        previousData = compute(actualData)
+        const stateFile = path.join(process.cwd(), './state.json')
+        if (fs.existsSync(stateFile)) {
+            previousData = compute(require("./state.json"))
+        } else {
+            previousData = actualData
+        }
     }
 
     actualData.forEach(actual => {
@@ -31,6 +43,9 @@ async function main() {
             const previous = previousData.filter(x => x.name === actual.name)[0];
             const text = quotes.generateTextMessage(actual.name, (actual.stars - previous.stars), `Score: ${actual.score}(+${actual.score - previous.score})`)
             slack.sendMessage(text);
+            if (config.sound) {
+                audio.play(`${MEDIA_PATH}/dj-horn.mp3`);
+            }
         }
     })
 
@@ -41,15 +56,15 @@ async function main() {
     setTimeout(main, 15 * 60 * 1000);
 }
 
-const gracefullStop = () => {
+const gracefullShutdown = () => {
     console.log("\nSaving actual state to ./state.json");
     require("fs").writeFileSync(__dirname + "/" + "state.json", JSON.stringify(lastResponse))
     process.exit(0);
 }
 
-// Perform a gracefull stop on CTRL + C or CTRL + D events or Kill signals
-process.on("SIGINT", gracefullStop)
-process.on("SIGKILL", gracefullStop)
+//catches ctrl+c event
+process.on('SIGINT', gracefullShutdown);
+process.on('SIGTERM', gracefullShutdown);
 
 // Run main function
 main()

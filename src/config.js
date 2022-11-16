@@ -12,7 +12,8 @@ const config = require("../config.json")
  *   'channelId': String,
  *   'token': `xoxb-${Number}-${Number}-${String}`,
  *   'incomingWebHookId': `${String}/${String}/${String}`
- * }
+ * },
+ * 'sound': Boolean
  * }}
  */
 module.exports = config;
