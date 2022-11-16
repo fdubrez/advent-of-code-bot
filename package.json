@@ -1,0 +1,26 @@
+{
+  "name": "advent-of-code-bot",
+  "version": "1.0.0",
+  "description": "A NodeJS bot that crawl Advent of Code API to retrieve leaderboard changes and publish messages in a slack channel",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com:fdubrez/advent-of-code-bot.git"
+  },
+  "keywords": [],
+  "author": "fdubrez",
+  "license": "WTFPL",
+  "bugs": {
+    "url": "https://github.com/fdubrez/advent-of-code-bot/issues"
+  },
+  "homepage": "https://github.com/fdubrez/advent-of-code-bot",
+  "devDependencies": {
+    "@types/node": "^18.11.10"
+  },
+  "volta": {
+    "node": "18.12.1"
+  }
+}
