@@ -14,16 +14,16 @@ const punchlines = [
 
 /**
  * 
- * @param {String} name player name
- * @param {Number} etoiles player star count earned since last update
- * @param {Number} score player score
- * @returns 
+ * @param {string} name player name
+ * @param {number} etoiles player star count earned since last update
+ * @param {string} score player score
+ * @returns the message
  */
 function generateTextMessage(name, etoiles, score) {
     const etat = etats[Math.floor(Math.random() * etats.length)]
     const adjectif = adjectifs[Math.floor(Math.random() * adjectifs.length)]
     const punchline = punchlines[Math.floor(Math.random() * punchlines.length)]
-    return `${etat} et ${adjectif}, ${name} ${punchline}. ${score}`.replace("XXX", ''+ etoiles);
+    return `${etat} et ${adjectif}, **${name}** ${punchline}. ${score}`.replace("XXX", '' + etoiles);
 }
 
 module.exports = {

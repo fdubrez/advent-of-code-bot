@@ -11,13 +11,13 @@ Create a `config.json` file that fit your needs.
 {
     "adventOfCode": {
         "cookie": "session=<your_cookie>", 
-        "leaderboard": <leaderboard_id>,
+        "leaderboard": "<leaderboard_id>",
         "year": 2022
     },
     "slack": {
-        "channelId": <slack_channel_id>,
-        "token": <slack_token>,
-        "incomingWebHookId" : <incoming_webhook_id>
+        "channelId": "<slack_channel_id>",
+        "token": "<slack_token>",
+        "incomingWebHookId" : "<incoming_webhook_id>"
     }
 }
 ```
