@@ -37,9 +37,25 @@ function compute(json) {
             name: member.name,
             score: member.local_score,
             total_stars: member.stars,
-            stars,
+            stars
         };
     });
+}
+
+/**
+ * Trouve et retourne les différences entre deux entrées du leaderboard
+ * @param {LeaderboardEntry} before
+ * @param {LeaderboardEntry} after
+ * @returns {LeaderboardEntryDifferences}
+ */
+function findChanges(before, after) {
+    const changes = {};
+    Object.keys(after.stars).forEach((day) => {
+        if (!before.stars[day] || JSON.stringify(before.stars[day]) !== JSON.stringify(after.stars[day])) {
+            changes[day] = after.stars[day];
+        }
+    });
+    return changes;
 }
 
 async function main() {
@@ -62,6 +78,7 @@ async function main() {
             const text = quotes.generateTextMessage(
                 actual.name,
                 actual.total_stars - previous.total_stars,
+                findChanges(previous, actual),
                 `Score: ${actual.score}(+${actual.score - previous.score})`
             );
             if (config.slack) {
