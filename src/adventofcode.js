@@ -1,28 +1,8 @@
-const https = require("https")
-const config = require("./config")
+const https = require("https");
+const config = require("./config");
 
 /**
- * @typedef {{
- * [day: string]: {
- *   [part: string]: {
- *     'get_star_ts': Number,
- *     'star_index': Number,
- *   }
- * }
- * }} CompletionDayLevel
- * @typedef {{
- * 'members': {
- *   [key: string]: {
- *     'completion_day_level': CompletionDayLevel,
- *     'local_score': Number,
- *     'global_score': Number,
- *     'stars': Number,
- *     'last_star_ts': Number,
- *     'id': Number,
- *     'name': String
- *   },
- * }
- * }} LeaderboardResponse
+ * Récupère l'état du leaderboard via l'API Advent of Code
  * @returns {Promise<LeaderboardResponse>} the JSON response of the Leaderboard API
  */
 async function getLeaderBoard() {
@@ -47,7 +27,7 @@ async function getLeaderBoard() {
         response += chunk;
       });
       res.on("end", () => {
-        resolve(JSON.parse(response.toString("utf-8")));
+        resolve(JSON.parse(response.toString()));
       });
 
       res.on("error", (err) => {
